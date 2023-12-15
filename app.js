@@ -13,8 +13,15 @@ const app = express();
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB =
+
+const dev_db_url =
   "mongodb+srv://chandlersnova:1.Flannery@cluster0.ecbpqv5.mongodb.net/local_library?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
+
+main().catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+}
 
 main().catch((err) => console.log(err));
 async function main() {
